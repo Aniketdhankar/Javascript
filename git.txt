@@ -1,0 +1,103 @@
+in older version only master was created but newer git version creates two git master and main  and main is the default
+---
+
+## 🧭 Full Steps: Moving from `master` to `main`
+
+### **Step 1: Start with master branch**
+
+When you initialized your repo (or cloned it), you had:
+
+```bash
+git init   # or cloned repo
+git branch
+# Output:
+# * master
+```
+
+So initially, your **only branch is `master`**.
+
+---
+
+### **Step 2: Commit all your changes in master**
+
+Add all files and commit:
+
+```bash
+git add .
+git commit -m "Initial commit on master"
+```
+
+✅ Now your `master` branch contains all your work.
+
+---
+
+### **Step 3: Create a new branch `main` from master**
+
+```bash
+git checkout -b main master
+
+-b option
+
+The -b flag tells Git to create a new branch and switch to it immediately.
+
+So git checkout -b <new-branch> = create branch + switch to it
+```
+
+* This **creates the `main` branch** and switches to it.
+* `main` now has all commits from `master`.
+
+
+
+master
+
+This tells Git the starting point for the new branch.
+
+In other words, main will start with all the commits that currently exist in master.
+
+If you omit this, Git uses your current branch as the base.
+
+---
+
+### **Step 4: Push `main` branch to remote**
+
+```bash
+git push -u origin main
+```
+
+* `-u` sets the upstream, so future `git push`/`pull` work automatically.
+* Remote now has a `main` branch with all your code.
+
+---
+
+### **Step 5: (Optional) Set `main` as the default branch on GitHub**
+
+1. Go to your repository → **Settings → Branches**
+2. Change **Default branch** from `master` → `main`
+3. Save changes.
+
+---
+
+### **Step 6: (Optional) Delete the old `master` branch from remote**
+
+```bash
+git push origin --delete master
+```
+
+* Removes the old `master` branch from the remote.
+* Now `main` is your only active branch.
+
+---
+
+### ✅ Quick Workflow Table
+
+| Step                                 | Command                                 |
+| ------------------------------------ | --------------------------------------- |
+| Commit everything on master          | `git add .` → `git commit -m "message"` |
+| Create main from master              | `git checkout -b main master`           |
+| Push main to remote                  | `git push -u origin main`               |
+| Set main as default branch on GitHub | Through Settings → Branches             |
+| Delete remote master (optional)      | `git push origin --delete master`       |
+
+---
+
+
