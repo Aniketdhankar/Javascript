@@ -1,0 +1,69 @@
+
+---
+
+### **Step 1: Fork the repository**
+
+* Go to the GitHub page of the project.
+* Click **Fork** → this creates a copy under your GitHub account.
+
+---
+
+### **Step 2: Clone your fork**
+
+```bash
+git clone https://github.com/your-username/project.git
+cd project
+```
+
+---
+
+### **Step 3: Create a feature branch**
+
+```bash
+git checkout -b feature-branch
+```
+
+* Never work directly on `main` in an open source project.
+* Add your changes/feature here.
+
+---
+
+### **Step 4: Commit your changes**
+
+```bash
+git add .
+git commit -m "Add my feature"
+```
+
+---
+
+### **Step 5: Push your feature branch to your fork**
+
+```bash
+git push origin feature-branch
+```
+
+* This pushes your branch to **your GitHub fork**, not the original repository.
+
+---
+
+### **Step 6: Create a Pull Request (PR)**
+
+1. Go to your fork on GitHub.
+2. You’ll see a **“Compare & pull request”** button.
+3. Select the original repository as the target (`base` = original main, `compare` = your feature branch).
+4. Add a title + description explaining your feature.
+5. Click **Create Pull Request**.
+
+* Now the maintainers of the original repo can **review your changes** and merge them.
+
+---
+
+### ✅ Key Points
+
+* **Do NOT push directly** to the original repo unless you have write access.
+* Always work on a **separate feature branch**.
+* Use **pull requests** to propose changes.
+
+---
+
