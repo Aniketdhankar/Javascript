@@ -1,0 +1,135 @@
+
+
+## 💡 What is Execution Context?
+
+* An **Execution Context (EC)** is an **environment where JavaScript code is executed**.
+* It keeps track of **variables, functions, and `this`** while running code.
+* Every time a function runs, a **new execution context** is created for it.
+
+---
+
+### 🔹 Types of Execution Context
+
+1. **Global Execution Context (GEC)**
+
+   * Created **once** when your JS program starts.
+   * Represents the **global scope**.
+   * `this` in GEC refers to `window` (in browsers).
+
+```js
+var a = 10;
+function greet() { console.log("Hello"); }
+console.log(this); // window
+```
+
+2. **Function Execution Context**
+
+   * Created **every time a function is called**.
+   * Has its own **scope, arguments, and `this`**.
+
+```js
+function sayHello(name) {
+  var msg = "Hi " + name;
+  console.log(msg);
+}
+sayHello("Aniket"); // new EC created for this call
+```
+
+3. **Eval Execution Context**
+
+   * Rarely used. Created by `eval()` function.
+
+---
+
+### 🔹 Components of Execution Context
+
+Each execution context has **two phases**:
+
+1. **Creation Phase**
+
+   * Memory is allocated for:
+
+     * Variables (initialized as `undefined`)
+     * Functions (stored completely)
+     * `this` value
+
+2. **Execution Phase**
+
+   * Code runs line by line and values are assigned.
+
+---
+
+### 🔹 Call Stack
+
+* JavaScript uses a **single-threaded Call Stack** to manage execution contexts.
+* **Global EC** is pushed first.
+* When a function is called, its **EC is pushed on top**.
+* After the function finishes, its **EC is popped**.
+
+```js
+function first() {
+  console.log("First");
+  second();
+}
+
+function second() {
+  console.log("Second");
+}
+
+first();
+// Call Stack:
+// 1. Global EC
+// 2. first() EC
+// 3. second() EC
+// 4. second() EC popped
+// 5. first() EC popped
+```
+
+---
+
+### ✅ Summary
+
+* **Execution Context** = environment for code execution.
+* **Global EC** is created once, **function EC** is created per function call.
+* EC manages **variables, functions, and `this`**.
+* JavaScript uses a **Call Stack** to handle multiple execution contexts.
+
+-------------------------
+
+
+Global Execution Context (GEC) is created when JS starts running.
+
+Creation phase: memory is allocated for variables, functions, and this.
+
+this value in GEC:
+
+Browser → window
+
+Node.js → {} (module.exports)
+
+Execution phase: code runs, variables get values.
+
+this in GEC does not change during execution.
+
+----------------------------------------------------
+
+
+run this is your browser sources->snippet
+
+function one(){
+    console.log("one")
+}
+
+function two(){
+    console.log("two")
+}
+function three(){
+    (function four(){
+    console.log(four)
+    })();
+    console.log("three")
+}
+one()
+two()
+three()
+ to understand how everthing if happening 
