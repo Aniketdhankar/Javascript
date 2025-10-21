@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code with me</title>
+</head>
+
+<body style="background-color:#212121;color:#fff;">
+    <div class="parent">
+        <div class="day">Monday</div>
+        <div class="day">Tuesday</div>
+        <div class="day">Thursday</div>
+        <div class="day">Friday</div>
+    </div>
+    
+</body>
+<script>
+    //task1 select parent elememt and tell us what values are present inside it
+    const target=document.querySelector('.parent')
+    console.log(target);
+    console.log(target.innerHTML);
+    console.log(target.children);//return htmlcollections
+    console.log(target.children[0]);
+    for(let i=0;i<target.children.length;i++){
+        console.log(target.children[i].innerHTML);
+    }
+    target.children[2].style.color="orange";
+
+    console.log(target.firstElementChild);
+    console.log(target.lastElementChild);
+
+    const dayone=document.querySelector('.day');
+    console.log(dayone.parentElement);
+    console.log(dayone.nextElementSibling);
+    console.log(dayone.nextElementSibling.nextElementSibling);
+    console.log(target.childNodes);//return nodeList
+    //first line break is counted as a node
+</script>
+</html>
