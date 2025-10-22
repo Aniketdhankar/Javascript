@@ -1,0 +1,118 @@
+
+By default, **JavaScript is synchronous and single-threaded**:
+
+* It executes **one statement at a time**, in the order written.
+* Each line **waits for the previous line to finish** before running.
+* This is why JS can “freeze” the browser if you do a **long-running operation** like a heavy loop.
+
+---
+
+#
+
+### But JS can be made asynchronous
+
+Asynchronous (Async)
+
+Code can run in the background, while other code keeps running.
+Does not wait for long tasks to finish.
+Useful for API calls, timers, or heavy tasks.
+
+Even though JS is synchronous by default, it **can handle async tasks** via:
+
+1. **Callbacks** (`setTimeout`, `setInterval`)
+2. **Promises** (`fetch(...).then(...)`)
+3. **Async/Await** (`async function(){ await ... }`)
+
+This is why JS can fetch data or handle events **without freezing the browser**.
+
+---
+
+💡 **Key takeaway:**
+
+> JavaScript itself runs line by line (sync), but it has a **mechanism (event loop + async APIs)** to handle tasks asynchronously.
+
+---
+
+
+
+
+
+---
+
+## **1️⃣ Blocking Code**
+
+* **Definition:** Code that **stops further execution** until the current task finishes.
+* Usually **synchronous tasks** are blocking.
+* The program “waits” for each task.
+
+**Example (JS synchronous/blocking):**
+
+```js
+console.log("Start");
+
+for(let i = 0; i < 1000000000; i++) {} // heavy task
+
+console.log("End");
+```
+
+**Output:**
+
+```
+Start
+End  (after loop finishes)
+```
+
+✅ The browser/program is **blocked** until the loop completes.
+
+---
+
+## **2️⃣ Non-blocking Code**
+
+* **Definition:** Code that **does not stop execution**; other tasks can run while waiting.
+* Usually **asynchronous tasks** (like timers, API calls) are non-blocking.
+
+**Example (JS non-blocking):**
+
+```js
+console.log("Start");
+
+setTimeout(() => {
+    console.log("Middle");
+}, 2000);
+
+console.log("End");
+```
+
+**Output:**
+
+```
+Start
+End
+Middle  (after 2 seconds)
+```
+
+✅ The program continues running while waiting for the timer → **non-blocking**.
+
+---
+
+## 🔹 Key Differences
+
+| Feature                   | Blocking             | Non-blocking                    |
+| ------------------------- | -------------------- | ------------------------------- |
+| Waits for task to finish? | Yes                  | No                              |
+| Execution type            | Synchronous          | Asynchronous                    |
+| Examples                  | Loops, calculations  | `setTimeout`, `fetch`, DB calls |
+| Effect on program         | Freezes UI or thread | Program keeps running           |
+
+---
+
+💡 **Easy way to remember:**
+
+* **Blocking = “stop everything until done”**
+* **Non-blocking = “do this in background while continuing”**
+
+---
+
+
+
+

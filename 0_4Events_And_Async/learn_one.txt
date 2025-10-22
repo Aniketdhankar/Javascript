@@ -1,0 +1,336 @@
+
+## 1️⃣ **Types of Events in JavaScript**
+
+JavaScript events can be categorized like this:
+
+| Type                      | Examples                                                                          | Description                         |
+| ------------------------- | --------------------------------------------------------------------------------- | ----------------------------------- |
+| **Mouse Events**          | `click`, `dblclick`, `mousedown`, `mouseup`, `mouseover`, `mouseout`, `mousemove` | Triggered by mouse actions          |
+| **Keyboard Events**       | `keydown`, `keyup`, `keypress`                                                    | Triggered by keyboard actions       |
+| **Form Events**           | `submit`, `change`, `focus`, `blur`                                               | Triggered by form elements          |
+| **Window Events**         | `load`, `resize`, `scroll`, `unload`                                              | Triggered by browser window actions |
+| **Touch Events** (mobile) | `touchstart`, `touchmove`, `touchend`                                             | Triggered by touch input            |
+| **Clipboard Events**      | `copy`, `cut`, `paste`                                                            | Triggered by clipboard actions      |
+| **Drag & Drop Events**    | `dragstart`, `dragover`, `drop`                                                   | For drag-and-drop functionality     |
+
+---
+
+## 2️⃣ **Event Object**
+
+Whenever an event occurs, JS passes an **event object** (`event` or `e`) to the handler.
+It contains **information about the event**.
+
+Example:
+
+```js
+document.querySelector('#btn').addEventListener('click', (e) => {
+    console.log(e); // prints the whole event object
+});
+```
+
+---
+
+## 3️⃣ **Important Event Properties**
+
+### 🔹 `timeStamp`
+
+* Returns the time (in milliseconds) **when the event was created**.
+
+```js
+document.querySelector('#btn').addEventListener('click', (e) => {
+    console.log('Event timeStamp:', e.timeStamp);
+});
+```
+
+---
+
+### 🔹 `defaultPrevented`
+
+* Boolean, `true` if **`preventDefault()`** was called on the event.
+* Used to check if the default browser action is prevented.
+
+```js
+const link = document.querySelector('#myLink');
+link.addEventListener('click', (e) => {
+    e.preventDefault();
+    console.log('Default prevented?', e.defaultPrevented); // true
+});
+```
+
+---
+
+### 🔹 `target`
+
+* Refers to the **element that triggered the event**.
+
+```js
+document.querySelector('#btn').addEventListener('click', (e) => {
+    console.log('Event target:', e.target);
+});
+```
+
+---
+
+### 🔹 `toElement` / `fromElement` (Mouseover/Mouseout)
+
+* `fromElement` → the element the mouse **came from**
+* `toElement` → the element the mouse **is entering**
+
+```js
+const box = document.querySelector('#box');
+box.addEventListener('mouseover', (e) => {
+    console.log('fromElement:', e.fromElement);
+    console.log('toElement:', e.toElement);
+});
+```
+
+> Note: `relatedTarget` is more standard than `toElement/fromElement`.
+
+---
+
+### 🔹 `srcElement`
+
+* Same as `target`, mainly for **IE compatibility**.
+* Can use as fallback:
+
+```js
+const btn = document.querySelector('#btn');
+btn.addEventListener('click', (e) => {
+    const elem = e.target || e.srcElement;
+    console.log(elem);
+});
+```
+
+---
+
+### 🔹 Mouse Position Properties
+
+1. **Client position**: coordinates relative to **viewport**
+
+   * `clientX`, `clientY`
+
+```js
+document.addEventListener('click', (e) => {
+    console.log('Client X/Y:', e.clientX, e.clientY);
+});
+```
+
+2. **Offset position**: coordinates relative to **event target element**
+
+   * `offsetX`, `offsetY`
+
+```js
+const box = document.querySelector('#box');
+box.addEventListener('click', (e) => {
+    console.log('Offset X/Y:', e.offsetX, e.offsetY);
+});
+```
+
+3. **Screen position**: coordinates relative to **screen**
+
+   * `screenX`, `screenY`
+
+```js
+document.addEventListener('click', (e) => {
+    console.log('Screen X/Y:', e.screenX, e.screenY);
+});
+```
+
+---
+
+## 4️⃣ **Complete Example**
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Event Properties</title>
+  <style>
+    #box { width: 200px; height: 200px; background: lightblue; margin: 50px; }
+  </style>
+</head>
+<body>
+
+<button id="btn">Click Me</button>
+<div id="box">Hover or Click Me</div>
+<a href="https://example.com" id="myLink">Go to Example</a>
+
+<script>
+  const btn = document.querySelector('#btn');
+  const box = document.querySelector('#box');
+  const link = document.querySelector('#myLink');
+
+  btn.addEventListener('click', (e) => {
+    console.log('--- Button Click ---');
+    console.log('timeStamp:', e.timeStamp);
+    console.log('target:', e.target);
+    console.log('srcElement:', e.srcElement);
+    console.log('clientX/Y:', e.clientX, e.clientY);
+    console.log('screenX/Y:', e.screenX, e.screenY);
+    console.log('offsetX/Y:', e.offsetX, e.offsetY);
+  });
+
+  box.addEventListener('mouseover', (e) => {
+    console.log('--- Box Hover ---');
+    console.log('fromElement:', e.fromElement);
+    console.log('toElement:', e.toElement);
+    console.log('relatedTarget:', e.relatedTarget);
+  });
+
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    console.log('--- Link Click ---');
+    console.log('defaultPrevented?', e.defaultPrevented);
+  });
+</script>
+
+</body>
+</html>
+```
+
+
+
+
+
+---
+
+## 🧠 What is Event Propagation?
+
+When an event occurs on an element, it **doesn’t just happen on that element**.
+It **travels through the DOM** in a specific order.
+
+There are **3 phases** of event propagation:
+
+1. **Capturing phase (trickling down)**
+
+   * The event starts from the **root of the document** (`document`) and moves **down the DOM tree** toward the target element.
+   * Rarely used but can be accessed by setting `capture = true` in `addEventListener`.
+
+2. **Target phase**
+
+   * The event **reaches the target element** (where the event actually occurred).
+
+3. **Bubbling phase (trickling up)**
+
+   * After the target phase, the event **bubbles up from the target element** to its ancestors (`parent → grandparent → body → document`).
+   * This is the **default behavior** in most events.
+
+---
+
+## ⚙️ Event Flow Diagram
+
+```
+document
+   ↓ capturing phase
+body
+   ↓ capturing
+div
+   ↓ capturing
+button
+   ↑ target phase
+div
+   ↑ bubbling
+body
+   ↑ bubbling
+document
+```
+
+---
+
+## 🔹 Example: Event Bubbling
+
+```html
+<div id="outer" style="padding:50px; background:#f9c;">
+  Outer Div
+  <button id="inner">Click Me</button>
+</div>
+
+<script>
+const outer = document.querySelector('#outer');
+const inner = document.querySelector('#inner');
+
+outer.addEventListener('click', () => {
+  console.log('Outer Div clicked');
+});
+
+inner.addEventListener('click', () => {
+  console.log('Button clicked');
+});
+```
+
+**What happens when you click the button?**
+
+```
+Button clicked
+Outer Div clicked
+```
+
+✅ This is **bubbling** — the event bubbles from the button to its parent div.
+
+---
+
+## 🔹 Capturing Phase Example
+
+```js
+outer.addEventListener('click', () => {
+  console.log('Outer Div clicked (capturing)');
+}, true); // 'true' enables capturing
+
+inner.addEventListener('click', () => {
+  console.log('Button clicked');
+});
+```
+
+**Click button output:**
+
+```
+Outer Div clicked (capturing)
+Button clicked
+```
+
+* Outer div handler runs **before** the button — because of capturing.
+
+---
+
+## 🔹 Stopping Event Propagation
+
+1. **`stopPropagation()`** → stops bubbling or capturing, event won’t go further.
+
+```js
+inner.addEventListener('click', (e) => {
+    e.stopPropagation();
+    console.log('Button clicked (no bubble)');
+});
+```
+
+2. **`stopImmediatePropagation()`** → stops bubbling **and prevents other handlers on same element** from running.
+
+---
+
+## 🔹 Why is Event Propagation Useful?
+
+* **Event Delegation:** Attach one handler to a parent element instead of each child.
+
+```js
+document.querySelector('#outer').addEventListener('click', (e) => {
+    if(e.target.tagName === 'BUTTON'){
+        console.log('Button inside outer clicked!');
+    }
+});
+```
+
+* Reduces memory usage and handles **dynamic elements** easily.
+
+---
+
+### ✅ Summary
+
+| Concept                        | Description                                                           |
+| ------------------------------ | --------------------------------------------------------------------- |
+| **Capturing**                  | Event travels from root → target element                              |
+| **Target**                     | Event reaches the element where it occurred                           |
+| **Bubbling**                   | Event travels from target → root                                      |
+| **stopPropagation()**          | Stop event from moving further                                        |
+| **stopImmediatePropagation()** | Stop event and other handlers on same element                         |
+| **Event Delegation**           | Use bubbling to handle multiple child events with one parent listener |
+

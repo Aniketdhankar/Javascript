@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <h1>learn ASYNC</h1>
+    <button id="stop">Stop</button>
+    
+</body>
+</html>
+<script>
+    //setTimeout(function(){
+    //    console.log("this is executed after 2 seconds");
+    //},2000)
+    //in settimeout it only work after the time interval once but in setinterval it works repeatedly after the time interval
+    const changeText=function(){
+        document.querySelector('h1').innerHTML=`this is changed `
+
+    }
+    const stopMe=setTimeout(changeText,2000)
+   document.getElementById('stop').addEventListener('click',function(){
+        clearTimeout(stopMe);
+        console.log("Stopped");
+    })
+
+    
+</script>
+</html>

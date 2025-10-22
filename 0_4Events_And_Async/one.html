@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <title>htnml Events </title>
+</head>
+<body style="background-color: #414141; color: aliceblue;">
+    <h2>Amazing image</h2>
+    <div >
+        <ul id="images">
+            <li><img width="200px" id="photoshop" src="https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt="photoshop"></li>
+            <li><img width="200px" id="japan" src="https://images.pexels.com/photos/3532553/pexels-photo-3532553.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt=""></li>
+            <li><img width="200px" id="river" src="https://images.pexels.com/photos/3532551/pexels-photo-3532551.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt=""></li>
+            <li><img width="200px" id="owl" src="https://images.pexels.com/photos/3532552/pexels-photo-3532552.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt="" ></li>
+            <li><img width="200px" id="prayer" src="https://images.pexels.com/photos/2522671/pexels-photo-2522671.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt=""></li>
+            <li><a style="color: aliceblue;" href="https://google.com" id="google">Google</a></li>
+        </ul>
+   </div>
+</body>
+<script>
+    //document.getElementById('owl').onclick=function(){
+    //    alert('You clicked on owl image');
+    //}this gives less features
+    //document.querySelector('#river').onclick=function(){
+   //     alert('You clicked on river image');
+   // }
+   //types of events,time stamp, defaultPrevented,target,toElement,srcElement 
+
+   /*
+   document.getElementById('images').addEventListener('click',function(e) {
+    alert('clicked insed the ul');
+   },false)
+   //event capturing false means event bubbling is enabled
+   //attachEvent() is used in older versions of IE
+   document.getElementById('owl').addEventListener('click',function(e){
+    alert('You clicked on owl image');
+    //e.stopPropagation(); to stop propagation
+   },false)
+   //propagation of event two types capturing and bubbling
+   //bubbling is default
+   //capturing is when event is first captured by the outermost element and propagated to the inner elements
+   document.getElementById('google').addEventListener('click',function(e){
+    e.preventDefault();
+    alert('default prevented, not going to google');
+   })
+
+   */
+
+
+   //task i want the images clicked to be dissappear
+   document.querySelector('#images').addEventListener('click',function(e){
+    console.log(e.target);
+
+    //e.target.style.display='none';//we have to remove full bullet point not the image so for that node we have tp select parent node
+
+    
+   // let removeIt=e.target.parentNode;//this gave us li
+   // removeIt.parentNode.removeChild(removeIt);//in this we removed li form ul
+
+
+    //removeIt.remove();// but if you click on list then it will be delated so for that we will do if and else 
+   if(e.target.tagName==='IMG'){
+     let removeIt=e.target.parentNode;//gave us li
+     removeIt.remove();
+   }
+
+   },false)
+
+</script>
+</html>

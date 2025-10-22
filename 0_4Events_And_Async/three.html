@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Learn ASYNC</h1>
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>    
+</body>
+<script>
+    /*
+    //setInterval is used to execute a function repeatedly after a certain time interval
+    //it has three parameters first is the function to be executed second is the time interval in milliseconds and third is optional parameters to be passed to the function
+    const sayDate=function(str){
+        console.log(str,Date.now());
+    }
+    const interval=setInterval(sayDate,2000,"Current time is:")
+    clearInterval(interval); //to stop the interval
+    */
+
+    //task1 to create a start and stop button to start and stop the interval
+   let interval; // shared
+
+document.querySelector('#start').addEventListener('click', function() {
+  if (!interval) {
+    interval = setInterval(showTime, 1000, "The time is");
+  }
+});
+
+document.querySelector('#stop').addEventListener('click', function() {
+  clearInterval(interval);
+  interval = null;
+});
+/*
+Actually, if interval is not null, !interval is false.
+
+Only when interval is null (or 0/falsy) does !interval become true.
+*/
+
+
+
+
+
+    
+
+</script>
+</html>
