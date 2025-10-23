@@ -1,0 +1,66 @@
+An **API** (Application Programming Interface) is a set of rules and tools that allows one software application to communicate with another. Think of it as a **messenger**: your app sends a request, and the API delivers the response from another system or service. APIs can be local (inside your code or system) or web-based (over the internet).
+
+
+
+### **How APIs are used in JavaScript**
+
+In JavaScript, APIs are often used to **fetch data from a server** or **interact with web services**. There are two main types:
+
+1. **Browser APIs (built-in)**
+   JavaScript running in the browser has access to many built-in APIs, like:
+
+   * **DOM API**: manipulate HTML elements (`document.getElementById()`)
+   * **Fetch API**: make HTTP requests (`fetch()`)
+   * **LocalStorage API**: store data in the browser (`localStorage.setItem()`)
+
+   **Example: Using `fetch` API**
+
+   ```javascript
+   fetch('https://api.example.com/data')
+       .then(response => response.json())
+       .then(data => {
+           console.log(data); // handle the data
+       })
+       .catch(error => {
+           console.error('Error:', error);
+       });
+   ```
+
+2. **Third-party APIs**
+   You can use APIs provided by other services like:
+
+   * **Twitter API** → fetch tweets
+   * **OpenWeatherMap API** → fetch weather data
+   * **Google Maps API** → display maps
+
+   Example:
+
+   ```javascript
+   const apiKey = 'YOUR_API_KEY';
+   fetch(`https://api.openweathermap.org/data/2.5/weather?q=London&appid=${apiKey}`)
+       .then(res => res.json())
+       .then(weather => console.log(weather));
+   ```
+
+---
+
+✅ **Key points:**
+
+* API is like a bridge between your code and another system.
+* `fetch` is the most common way to use web APIs in JS.
+* Responses are usually in **JSON format**, which is easy to handle in JavaScript.
+* You can use **async/await** syntax for cleaner asynchronous code:
+
+```javascript
+async function getData() {
+    try {
+        const response = await fetch('https://api.example.com/data');
+        const data = await response.json();
+        console.log(data);
+    } catch (err) {
+        console.error(err);
+    }
+}
+getData();
+```
+

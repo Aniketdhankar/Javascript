@@ -1,0 +1,121 @@
+In programming, asynchronous operations are tasks that take time to complete, but instead of blocking the whole program, they let the rest of your code keep running while waiting for the result.
+
+---
+
+## **1. What is a Promise?**
+
+A **Promise** is an object representing the **eventual completion (or failure) of an asynchronous operation** and its resulting value.
+
+Think of it as a **promise to give you a result later**:
+
+* **Pending** → The operation hasn’t finished yet.
+* **Fulfilled** → The operation completed successfully.
+* **Rejected** → The operation failed.
+
+---
+
+## **2. Syntax of a Promise**
+
+```javascript
+let promise = new Promise((resolve, reject) => {
+    // some async operation
+    let success = true;
+
+    if(success) {
+        resolve("Operation succeeded!");
+    } else {
+        reject("Operation failed!");
+    }
+});
+```
+
+* `resolve(value)` → Called when operation is successful.
+* `reject(error)` → Called when operation fails.
+
+---
+
+## **3. Using Promises**
+
+You use **`.then()`** for success and **`.catch()`** for failure.
+
+```javascript
+promise
+    .then((result) => {
+        console.log("Success:", result);
+    })
+    .catch((error) => {
+        console.log("Error:", error);
+    });
+```
+
+---
+
+## **4. Example: Simulating async operation**
+
+```javascript
+function fetchData() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            let data = { id: 1, name: "Aniket" };
+            resolve(data); // or reject("Error fetching data");
+        }, 2000); // 2 seconds delay
+    });
+}
+
+fetchData()
+    .then((data) => console.log("Data received:", data))
+    .catch((err) => console.log("Error:", err));
+```
+
+Output after 2 seconds:
+
+```
+Data received: { id: 1, name: "Aniket" }
+```
+
+---
+
+## **5. Chaining Promises**
+
+You can chain multiple `.then()` calls:
+
+```javascript
+fetchData()
+    .then(data => {
+        console.log(data);
+        return data.name;
+    })
+    .then(name => {
+        console.log("User name:", name);
+    })
+    .catch(err => console.log(err));
+```
+
+---
+
+## **6. Promise.all and Promise.race**
+
+* **Promise.all** → Waits for all promises to finish:
+
+```javascript
+Promise.all([promise1, promise2]).then(results => {
+    console.log(results); // array of results
+});
+```
+
+* **Promise.race** → Returns the first finished promise:
+
+```javascript
+Promise.race([promise1, promise2]).then(result => {
+    console.log(result);
+});
+```
+
+---
+
+✅ **Summary:**
+
+* Promise = async operation that may succeed or fail.
+* `.then()` handles success, `.catch()` handles failure.
+* Promises can be chained or combined (`all`, `race`).
+

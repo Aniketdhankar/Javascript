@@ -1,0 +1,124 @@
+
+## 🌐 What Are HTTP Methods?
+
+When your browser or program communicates with a server, it doesn’t just “ask for data” blindly — it tells the server **what kind of action** it wants to perform. These actions are called **HTTP methods**.
+
+The most common ones are:
+
+---
+
+### 1️⃣ **GET** – Read or Retrieve Data
+
+* Used to **fetch data** from a server.
+* The server **doesn’t change anything**.
+* Example: Reading user info from GitHub.
+
+```js
+fetch('https://api.github.com/users/hiteshchoudhary', {
+  method: 'GET'
+})
+  .then(res => res.json())
+  .then(data => console.log(data));
+```
+
+💡 **Analogy:**
+
+> GET is like **asking a waiter** for the menu — you just look, nothing changes.
+
+---
+
+### 2️⃣ **POST** – Create / Send Data
+
+* Used to **send data to the server**, often to **create something new**.
+* Example: Submitting a form or creating a new user.
+
+```js
+fetch('https://api.example.com/users', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ name: 'Aniket', age: 21 })
+})
+  .then(res => res.json())
+  .then(data => console.log(data));
+```
+
+💡 **Analogy:**
+
+> POST is like **placing an order** — you are giving the waiter info to make something new.
+
+---
+
+### 3️⃣ **PUT** – Update Data
+
+* Used to **replace or update an existing resource** on the server.
+* Sends full data for the update.
+
+```js
+fetch('https://api.example.com/users/123', {
+  method: 'PUT',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ name: 'Aniket Updated', age: 22 })
+});
+```
+
+💡 **Analogy:**
+
+> PUT is like **replacing your old order** with a new one.
+
+---
+
+### 4️⃣ **PATCH** – Partially Update Data
+
+* Similar to PUT, but **only updates certain fields**, not the entire resource.
+
+```js
+fetch('https://api.example.com/users/123', {
+  method: 'PATCH',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ age: 23 }) // only updating age
+});
+```
+
+💡 **Analogy:**
+
+> PATCH is like **changing just one item** in your existing order.
+
+---
+
+### 5️⃣ **DELETE** – Delete Data
+
+* Used to **remove a resource** from the server.
+
+```js
+fetch('https://api.example.com/users/123', {
+  method: 'DELETE'
+});
+```
+
+💡 **Analogy:**
+
+> DELETE is like **cancelling your order completely**.
+
+---
+
+### 🧠 Summary Table
+
+| Method | Purpose                  | Analogy                  |
+| ------ | ------------------------ | ------------------------ |
+| GET    | Fetch/read data          | Look at menu             |
+| POST   | Create/send data         | Place order              |
+| PUT    | Update/replace full data | Replace old order        |
+| PATCH  | Update part of data      | Change one item in order |
+| DELETE | Delete data              | Cancel order             |
+
+---
+
+✅ **Key Points:**
+
+* GET → safe (doesn’t change server), POST/PUT/PATCH → modify server.
+* `fetch()` defaults to GET if `method` is not specified.
+* Always use headers & JSON.stringify when sending JSON data in POST/PUT/PATCH.
+
+---
+
+?
