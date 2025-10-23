@@ -1,0 +1,172 @@
+
+
+what is lexical scope???
+1. What is Lexical Scope?
+
+Lexical scope (also called static scope) in JavaScript means:
+The scope of a variable is determined by its location in the source code (where it is written), and this scope does not change at runtime.
+In other words, inner functions can access variables of outer functions where they were defined.
+The “lexical” part means the scope is fixed based on the code structure, not how or where the function is called.
+
+
+### **1. Key Rule About Arrow Functions**
+
+> **Arrow functions do not have their own `this`.**
+> They **inherit `this` from the surrounding lexical scope** (where they were defined), not from how or where they are called.
+
+This is **different from regular functions**, which get `this` from the **caller object**.
+
+---
+
+### **2. Example with Object**
+
+```javascript
+const person = {
+  name: "Aniket",
+  arrowGreet: () => {
+    console.log(this.name);
+  }
+};
+
+person.arrowGreet(); // undefined
+```
+
+**Why undefined?**
+
+1. `arrowGreet` is defined **as an arrow function inside the object literal**.
+2. Arrow function **does not get `this` from `person`**, unlike a normal method.
+3. `this` is inherited from the **lexical scope outside the arrow function**, which in this case is **the global scope** (`window` in browsers or `undefined` in strict mode).
+4. Since `window.name` is not defined, it prints `undefined`.
+
+---
+
+### **3. Contrast with Normal Function**
+
+```javascript
+const person = {
+  name: "Aniket",
+  greet: function() {
+    console.log(this.name);
+  }
+};
+
+person.greet(); // Aniket
+```
+
+* `greet` is a **regular function**, so `this` refers to the **object calling it** (`person`).
+* That’s why it works as expected.
+
+---
+
+### **4. Correct Way to Use Arrow Functions Inside Objects**
+
+* Arrow functions are often used **inside methods** for callbacks, not as methods themselves:
+
+```javascript
+const person = {
+  name: "Aniket",
+  greet: function() {
+    setTimeout(() => {
+      console.log(this.name); // Arrow function inherits 'this' from greet()
+    }, 1000);
+  }
+};
+
+person.greet(); // Aniket
+```
+
+* Here, arrow function inherits `this` **lexically from `greet`**, which is called on `person`. ✅
+
+---
+
+### **5. Key Takeaways**
+
+1. Arrow functions **ignore the object they are part of**; they **do not get `this` from the object**.
+2. Normal functions **do get `this` from the caller object**.
+3. Use arrow functions for **nested functions/callbacks** where you want to preserve `this`.
+
+---
+
+
+
+going in moredepth -2. Arrow function **does not get `this` from `person`**, unlike a normal method.
+
+
+
+
+### **1. Lexical Scope for `this`**
+
+> Arrow functions **do not have their own `this`**.
+> Instead, they **use the `this` value from the surrounding code where they were defined**.
+
+* The “surrounding code” is called the **lexical scope**.
+* So `this` is **inherited from that outer scope**, and it **does not change** depending on how you call the arrow function.
+
+---
+
+### **2. Example 1: Global Scope**
+
+```javascript
+const arrow = () => {
+    console.log(this);
+};
+
+arrow(); 
+```
+
+* `arrow` is defined in the **global scope**.
+* Lexical scope of arrow = global scope.
+* `this` → points to **global object** (`window` in browsers) or `undefined` in strict mode.
+
+---
+
+### **3. Example 2: Inside Object**
+
+```javascript
+const person = {
+    name: "Aniket",
+    arrowGreet: () => {
+        console.log(this.name);
+    }
+};
+
+person.arrowGreet(); // undefined
+```
+
+* `arrowGreet` is **an arrow function**, defined **inside the object literal**.
+* Lexical scope of arrow = **the surrounding scope where it was defined**, which is **the global scope**, **not the `person` object**.
+* So `this.name` → looks for `name` on the **global object** → undefined.
+
+---
+
+### **4. Example 3: Arrow inside a Method**
+
+```javascript
+const person = {
+    name: "Aniket",
+    greet: function() {
+        const arrowFunc = () => {
+            console.log(this.name);
+        };
+        arrowFunc();
+    }
+};
+
+person.greet(); // Aniket
+```
+
+* `arrowFunc` is an arrow function **inside the `greet` method**.
+* Lexical scope of arrow = `greet` method.
+* `this` in `greet` → `person` (because `greet` was called on `person`)
+* Arrow inherits `this` from `greet` → correctly refers to `person`. ✅
+
+---
+
+### **5. Key Point**
+
+* **Arrow functions never define their own `this`.**
+* `this` in an arrow function is **always inherited from the surrounding lexical context**.
+* That’s why **where the arrow is written matters**, not how it is called.
+
+---
+
